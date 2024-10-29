@@ -1,0 +1,25 @@
+<configuration>
+	<springProperty name="logstashUri" source="custom.logstash_uri" />
+	<springProperty name="serviceName" source="spring.application.name" />
+	<springProperty name="tags" source="spring.cloud.consul.discovery.tags" />
+	<appender name="TCP_LOGSTASH"
+		class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>${logstashUri}</destination>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"tags": "${tags}","serviceName": "${serviceName}"}</customFields>
+		</encoder>
+	</appender>
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.springframework.boot" level="WARN" />
+	<logger name="org.springframework.boot.autoconfigure" level="WARN" />
+	<logger name="org.springframework.context" level="WARN" />
+
+	<logger name="com.topkey.jdeexpensetransfer" level="INFO" additivity="false">
+		<appender-ref ref="TCP_LOGSTASH" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="TCP_LOGSTASH" />
+	</root>
+</configuration>

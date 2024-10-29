@@ -1,0 +1,14 @@
+spring:
+ cloud:
+  consul:
+   config:
+    acl-token: ${CONSUL_TOKEN}
+   host: consul-server
+   port: 8500
+   discovery:
+    acl-token: ${CONSUL_TOKEN}
+    healthCheckPath: /actuator/health
+    tags: prod
+custom:
+ logstash_uri: logstash:4660
+ appender_ref: TCP_LOGSTASH

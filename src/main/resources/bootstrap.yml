@@ -1,0 +1,26 @@
+spring:
+ application:
+  name: jde-expense-transfer-service
+ cloud:
+  consul:
+    config:
+     enabled: true
+     prefixes: config
+     watch:
+      enabled: true
+     format: yaml
+     fail-fast: true
+    discovery:
+     serviceName: jde-expense-transfer-service
+     tags: dev
+     healthCheckInterval: 10s
+     healthCheckCriticalTimeout: 30s
+
+management:
+ endpoint:
+  health:
+   show-details: always
+ endpoints:
+  web:
+   exposure:
+    include: "*"

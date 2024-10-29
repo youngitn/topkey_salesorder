@@ -1,0 +1,56 @@
+#----------------- 設定檔須知 -----------------
+
+# ╔════════════════════════════════════════════════════════════════╗
+# ║ bootstrap.yml 必須存在                                         ║
+# ║   這是應用程式生命週期早期載入的設定文件，主要用於設定與外部設定      ║
+# ║   中心（如 Spring Cloud Config Server 或 Consul）相關的配置。       ║
+# ╟────────────────────────────────────────────────────────────────╢
+# ║ application.yml 可以不存在                                      ║
+# ║   如果沒有提供此檔案，應用程式仍然可以正常啟動，只要所有必要的設定    ║
+# ║   已經在其他地方（如 bootstrap.yml 或外部設定中心）設定好了。        ║
+# ╚════════════════════════════════════════════════════════════════╝
+
+# **載入順序和優先級**
+
+# 1. **bootstrap.yml**
+#    用於設定應用程式早期載入的配置，優先順序最高。通常用於配置與外部配置中心相關的設定。
+
+# 2. **bootstrap-<profile>.yml**
+#    根據啟動的 profile 載入（例如 `bootstrap-dev.yml`），用於覆寫 `bootstrap.yml` 中的配置。
+
+# 3. **application.yml**
+#    應用程式的主要設定檔。
+
+# 4. **application-<profile>.yml**
+#    根據啟動的 profile 載入（例如 `application-dev.yml`），用於覆寫 `application.yml` 中的設定。
+
+# **優先級高的設定值會覆寫優先級低的設定值**
+
+# 例如：
+# - 如果 `bootstrap.yml` 設定了某個值，而 `bootstrap-dev.yml` 中對該值進行了修改，
+#   則應用程式啟動時將使用 `bootstrap-dev.yml` 中的值。
+# - 同樣地，如果 `application.yml` 設定了某個值，而 `application-dev.yml` 中對該值進行了修改，
+#   則應用程式啟動時將使用 `application-dev.yml` 中的值。
+
+# 以上設定檔會按照上述順序和優先級進行加載，以確保應用程式在各個環境中獲得正確的配置。
+
+# 重要：
+# - `bootstrap`系列配置文件不會被`application`系列配置文件覆寫。
+# - 這意味著，`bootstrap`系列和`application`系列之間的配置不會互相影響。
+# - 當存在 bootstrap 系列設定檔時，所有與 Consul 相關的設定都應該放在 bootstrap 系列設定檔中，而不是 application 系列設定檔中。
+# - 這是因為這些配置需要在應用程式啟動的早期階段就被讀取，以便正確地與 Consul 進行服務註冊和發現。
+
+###########################################################
+# 因為要外部指定profile=XXX,所以將會改變的部分如IP,放置在bootstrap-XXX.yml以利管理.
+###########################################################
+spring:
+ cloud:
+  consul:
+   host: consul_server
+   port: 8500
+   discovery:
+    healthCheckPath: /actuator/health
+#custom:
+# logstash_uri: 10.4.3.249:4660
+# appender_ref: TCP_LOGSTASH
+
