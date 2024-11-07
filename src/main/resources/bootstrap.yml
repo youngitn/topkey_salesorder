@@ -1,6 +1,6 @@
 spring:
  application:
-  name: jde-expense-transfer-service
+  name: sales-order-service
  cloud:
   consul:
     config:
@@ -11,8 +11,8 @@ spring:
      format: yaml
      fail-fast: true
     discovery:
-     serviceName: jde-expense-transfer-service
-     tags: dev
+     serviceName: sales-order-service
+     tags: loacaltest
      healthCheckInterval: 10s
      healthCheckCriticalTimeout: 30s
 

@@ -1,12 +1,8 @@
-package com.topkey.schedule;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+package com.topkey.salesorder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class App {
 
 	public static void main(String[] args) {
